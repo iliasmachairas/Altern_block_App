@@ -22,17 +22,23 @@ from openpyxl.chart import BarChart, Reference
 from openpyxl.styles import Border, Side
 from openpyxl.utils import get_column_letter
 
+from pathlib import Path
+cwd = Path.cwd().parent
+print(cwd)
+stations_path = cwd / 'Data/GR_StationsIDF_FD_English.xlsx'
+stations_shp = cwd / 'Data/GR_StationsIDF_FD/GR_StationsIDF_FD.shp'
+print(stations_path)
+
 st.set_page_config(layout = "wide")
 
 st.markdown("""Alternating Block method - Greece""")
 
 col2, space2, col3, space3, col4  = st.columns((8,1,10,1,10))
 
-
-stations = pd.read_excel('../Data/GR_StationsIDF_FD_English.xlsx')
+stations = pd.read_excel(stations_path)
 stations_id = stations.loc[:,'id'].values.tolist()
 
-stations_shp = gpd.read_file('../Data/GR_StationsIDF_FD/GR_StationsIDF_FD.shp')
+stations_shp = gpd.read_file(stations_shp)
 stations_shp_4326 = stations_shp.to_crs(epsg='4326')
 
 with col2:
